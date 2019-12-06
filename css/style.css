@@ -1,0 +1,23 @@
+@import url(https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic&subset=latin);
+
+#nav {
+    background-color: #0b3c5d;
+}
+
+#page-content {
+    position: relative;
+    min-height: 79vh;
+    padding-bottom: 1em;
+}
+
+#footer {
+    padding: 1em;
+    border-top: 2px solid rgba(34, 36, 38, .15);
+    background-color: #0b3c5d;
+    color: #fff;
+    text-align: center;
+}
+
+#footer a {
+    color: #d9b310;
+}
