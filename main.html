@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
     <link rel="stylesheet" type="text/css" href="./css/style.css">
     <title>Scheduler 415</title>
+    <script src = "./css/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
 </head>
 <body>
@@ -19,14 +20,14 @@
         <p>A scheduler app designed for students.</p>
         <div id="scheduler">
             <div class="ui center aligned container">
-                <button class="ui button">Add</button>
-                <button class="ui button">Edit</button>
+                <button class="ui button" onclick="toggle('#add-modal')">Add</button>
+                <button class="ui button" onclick="toggle('#edit-modal')">Edit</button>
                 <button class="ui button">Import</button>
                 <button class="ui button">Export</button>
                 <button class="ui button">Download</button>
                 <button class="ui button">Clear</button>
             </div>
-            <table class="ui fixed celled table">
+            <table class="ui fixed celled structured table">
                 <thead class="full-width"><tr>
                     <th></th>
                     <th>Sunday</th>
@@ -57,7 +58,7 @@
                     <td id="fr"></td>
                     <td id="sa"></td>
                 </tr>
-                <tr id="0600">
+                <tr id="0700">
                     <td rowspan="2">7:00am</td>
                     <td id="su"></td>
                     <td id="mo"></td>
@@ -67,7 +68,7 @@
                     <td id="fr"></td>
                     <td id="sa"></td>
                 </tr>
-                <tr id="0630">
+                <tr id="0730">
                     <td id="su"></td>
                     <td id="mo"></td>
                     <td id="tu"></td>
@@ -76,7 +77,7 @@
                     <td id="fr"></td>
                     <td id="sa"></td>
                 </tr>
-                <tr id="0600">
+                <tr id="0800">
                     <td rowspan="2">8:00am</td>
                     <td id="su"></td>
                     <td id="mo"></td>
@@ -86,7 +87,7 @@
                     <td id="fr"></td>
                     <td id="sa"></td>
                 </tr>
-                <tr id="0630">
+                <tr id="0830">
                     <td id="su"></td>
                     <td id="mo"></td>
                     <td id="tu"></td>
@@ -123,6 +124,89 @@
         </p>
     </div>
     </div>
+    <!--Add Modal-->
+    <div class="ui tiny modal" id="add-modal">
+        <div class="scrolling content">
+            <form class="ui form" id="add-course" style="padding-bottom: 1em">
+                <h3 class="ui dividing header">Add a Course</h3>
+                <div class="two fields">
+                    <div class="field">
+                        <label>Course Title</label>
+                        <input type="text" name="className">
+                    </div>
+                    <div class="field">
+                        <label>Color</label>
+                        <input type="text" name="color">
+                    </div>
+                </div>
+                <div class="ui segment" id="meeting-1">
+                    <span style="float: right">
+                        <i class="close link icon" onclick="meetingForm('del')"></i>
+                    </span>
+                    <div class="three fields">
+                        <div class="field">
+                        <label>Course Type</label>
+                            <input type="text" name="courseType">
+                        </div>
+                        <div class="field">
+                        <label>Instructor</label>
+                            <input type="text" name="courseType">
+                        </div>
+                        <div class="field">
+                        <label>Location</label>
+                            <input type="text" name="courseType">
+                        </div>
+                    </div>
+                    <div class="equal width inline fields">
+                        <div class="field">
+                            <div class="ui checkbox">
+                              <input type="checkbox" name="weekday" value="SU">
+                              <label>Sun</label>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui checkbox">
+                              <input type="checkbox" name="weekday" value="MO">
+                              <label>Mon</label>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui checkbox">
+                              <input type="checkbox" name="weekday" value="TU">
+                              <label>Tue</label>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui checkbox">
+                              <input type="checkbox" name="weekday" value="WE">
+                              <label>Wed</label>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui checkbox">
+                              <input type="checkbox" name="weekday" value="TH">
+                              <label>Thu</label>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui checkbox">
+                              <input type="checkbox" name="weekday" value="FR">
+                              <label>Fri</label>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui checkbox">
+                              <input type="checkbox" name="weekday" value="SA">
+                              <label>Sat</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <button class="ui button" onclick="meetingForm('add')">Add Another Meeting Time</button>
+        </div>
+    </div>
+    <!--Edit Modal-->
 <script src="scheduler.js" type="text/javascript"></script>
 </body>
 </html>
