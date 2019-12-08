@@ -26,8 +26,9 @@
                 <button class="ui button">Export</button>
                 <button class="ui button">Download</button>
                 <button class="ui button">Clear</button>
+                <button class="ui button" onclick="toggle('#settings-modal')">Settings</button>
             </div>
-            <table class="ui fixed celled structured table">
+            <table class="ui padded fixed celled structured table">
                 <thead class="full-width"><tr>
                     <th></th>
                     <th>Sunday</th>
@@ -42,7 +43,7 @@
                 <tr id="0600">
                     <td rowspan="2">6:00am</td>
                     <td id="su"></td>
-                    <td id="mo"></td>
+                    <td id="mo"> </td>
                     <td id="tu"></td>
                     <td id="we"></td>
                     <td id="th"></td>
@@ -51,7 +52,7 @@
                 </tr>
                 <tr id="0630">
                     <td id="su"></td>
-                    <td id="mo"></td>
+                    <td id="mo"> </td>
                     <td id="tu"></td>
                     <td id="we"></td>
                     <td id="th"></td>
@@ -132,29 +133,29 @@
                 <div class="two fields">
                     <div class="field">
                         <label>Course Title</label>
-                        <input type="text" name="className">
+                        <input type="text" name="courseName" placeholder="Calc II, CHEM 161, etc" required>
                     </div>
                     <div class="field">
                         <label>Color</label>
-                        <input type="text" name="color">
+                        <input type="text" name="color" placeholder="#23416c">
                     </div>
                 </div>
                 <div class="ui segment" id="meeting-1">
                     <span style="float: right">
-                        <i class="close link icon" onclick="meetingForm('del')"></i>
+                        <i class="close link icon"></i>
                     </span>
                     <div class="three fields">
                         <div class="field">
                         <label>Course Type</label>
-                            <input type="text" name="courseType">
+                            <input type="text" name="courseType" placeholder="Lab, Lecture, etc">
                         </div>
                         <div class="field">
                         <label>Instructor</label>
-                            <input type="text" name="courseType">
+                            <input type="text" name="instructor" placeholder="John Doe">
                         </div>
                         <div class="field">
                         <label>Location</label>
-                            <input type="text" name="courseType">
+                            <input type="text" name="location" placeholder="Building A">
                         </div>
                     </div>
                     <div class="equal width inline fields">
@@ -201,12 +202,35 @@
                             </div>
                         </div>
                     </div>
+                    <div class="fields">
+                        <div class="field">
+                        <label>Start Time</label>
+                            <input type="time" name="timeStart" required>
+                        </div>
+                        <div class="field">
+                        <label>End Time</label>
+                            <input type="time" name="timeEnd" required>
+                        </div>
+                    </div>
                 </div>
             </form>
+            <button class="ui right floated primary button" onclick="addCourse()">Save</button>
             <button class="ui button" onclick="meetingForm('add')">Add Another Meeting Time</button>
         </div>
     </div>
-    <!--Edit Modal-->
+    <!--Settings Modal-->
+    <div class="ui tiny modal" id="settings-modal">
+        <div class="content">
+            <form class="ui form" id="settings" style="padding-bottom: 1em">
+                <h3 class="ui dividing header">Settings</h3>
+                <label>Display Weekends</label>
+                <div class="field">
+                    <div class="ui checkbox">
+                    <input type="checkbox" name="weekends" value="noweekend">
+                </div>
+            </form>
+        </div>
+    </div>
 <script src="scheduler.js" type="text/javascript"></script>
 </body>
 </html>

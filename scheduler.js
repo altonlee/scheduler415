@@ -9,49 +9,51 @@
  * for the app to function. 
 */
 
-document.addEventListener("DOMContentLoaded", function() {
-});
+/*document.addEventListener("DOMContentLoaded", function() {
+});*/
 
 // Array of user's Courses
 var schedule = [];
-var course = {
-    id: "01",
-    className: "ICS 415"
-}
-schedule.push(course);
-console.log(schedule);
 
-// Toggles Add modal on and off
-function toggle(object) {
-    $(object).modal('toggle');
-}
-
-// Adds or removes meeting times from a course
 
 // Creates a Course object to be pushed into object schedule. 
-// Takes parameters to be filled in. 
-function addToScheduler() {
-    var course = {
-        id: "",
-        courseName: "",
-        meets {
-            id: "",
-            days {
-                mo: false,
-                tu: false,
-                we: false,
-                th: false,
-                fr: false,
-                sa: false,
-                su: false
-            }
-            startHour: 10,
-            startMin: 30,
-            endHour: 11,
-            endMin: 20,
-            courseType: "",
-            instructor: "",
-            location: ""
+// Does not take any parameters.
+function addCourse() {
+    var form = $("#add-course").serializeArray();
+    var course = [];
+    var days = [];
+
+    // Check form results
+    for (i = 0; i < form.length; i++) {
+        if (form[i].name === "weekday") {
+            days.push(form[i].value);
+            course["weekdays"] = days;
+        } else {
+            course[form[i].name] = form[i].value;
         }
     }
+
+    // Check required inputs
+    if (course['courseName'] === "") {
+        alert("Course must have a title.");
+    } else if (days.length <= 0) {
+        alert("At least one day must be selected.");
+    } else if (course['timeStart'] === "") {
+        alert("Course is missing a start time.");
+    } else if (course['timeEnd'] === "") {
+        alert("Course is missing an end time.");
+    } else {
+        // Push into schedule
+        schedule.push(course);
+        document.getElementById('add-course').reset();
+        console.log(schedule);
+        toggle('#add-modal');        
+    }
+}
+
+
+// Toggles modals on and off.
+// Takes one parameter, the name of the modal to toggle. 
+function toggle(object) {
+    $(object).modal('toggle');
 }
