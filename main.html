@@ -18,16 +18,16 @@
     <div class="ui container" id="page-content">
         <h1>Scheduler 415</h1>
         <p>A scheduler app designed for students.</p>
-        <div id="scheduler">
-            <div class="ui center aligned container">
-                <button class="ui button" onclick="toggle('#add-modal')">Add</button>
-                <button class="ui button" onclick="toggle('#edit-modal')">Edit</button>
-                <button class="ui button">Import</button>
-                <button class="ui button">Export</button>
-                <button class="ui button">Download</button>
-                <button class="ui button">Clear</button>
-                <button class="ui button" onclick="toggle('#settings-modal')">Settings</button>
-            </div>
+        <div class="ui center aligned container" style="padding-bottom: 1em">
+            <button class="ui button" onclick="toggle('#add-modal')">Add</button>
+            <button class="ui button" onclick="toggle('#edit-modal'); editSelection()">Edit</button>
+            <button class="ui button">Import</button>
+            <button class="ui button">Export</button>
+            <button class="ui button">Download</button>
+            <button class="ui button">Clear</button>
+            <button class="ui button" onclick="toggle('#settings-modal')">Settings</button>
+        </div>
+        <div id="scheduler" style="overflow: auto; max-height: 25em;">
             <table class="ui padded fixed celled structured table">
                 <thead class="full-width"><tr>
                     <th></th>
@@ -40,26 +40,140 @@
                     <th>Saturday</th>
                 </tr></thead>
                 <tbody>
-                <tr id="0600">
+                <tr id="_">
+                    <td rowspan="2">12:00am</td>
+                    <td id="su"></td>
+                    <td id="mo"></td>
+                    <td id="tu"></td>
+                    <td id="we"></td>
+                    <td id="th"></td>
+                    <td id="fr"></td>
+                    <td id="sa"></td>
+                </tr>
+                <tr id="_">
+                    <td id="su"></td>
+                    <td id="mo"></td>
+                    <td id="tu"></td>
+                    <td id="we"></td>
+                    <td id="th"></td>
+                    <td id="fr"></td>
+                    <td id="sa"></td>
+                </tr>
+                <tr id="_">
+                    <td rowspan="2">1:00am</td>
+                    <td id="su"></td>
+                    <td id="mo"></td>
+                    <td id="tu"></td>
+                    <td id="we"></td>
+                    <td id="th"></td>
+                    <td id="fr"></td>
+                    <td id="sa"></td>
+                </tr>
+                <tr id="_">
+                    <td id="su"></td>
+                    <td id="mo"></td>
+                    <td id="tu"></td>
+                    <td id="we"></td>
+                    <td id="th"></td>
+                    <td id="fr"></td>
+                    <td id="sa"></td>
+                </tr>
+                <tr id="_">
+                    <td rowspan="2">2:00am</td>
+                    <td id="su"></td>
+                    <td id="mo"></td>
+                    <td id="tu"></td>
+                    <td id="we"></td>
+                    <td id="th"></td>
+                    <td id="fr"></td>
+                    <td id="sa"></td>
+                </tr>
+                <tr id="_">
+                    <td id="su"></td>
+                    <td id="mo"></td>
+                    <td id="tu"></td>
+                    <td id="we"></td>
+                    <td id="th"></td>
+                    <td id="fr"></td>
+                    <td id="sa"></td>
+                </tr>
+                <tr id="_">
+                    <td rowspan="2">3:00am</td>
+                    <td id="su"></td>
+                    <td id="mo"></td>
+                    <td id="tu"></td>
+                    <td id="we"></td>
+                    <td id="th"></td>
+                    <td id="fr"></td>
+                    <td id="sa"></td>
+                </tr>
+                <tr id="_">
+                    <td id="su"></td>
+                    <td id="mo"></td>
+                    <td id="tu"></td>
+                    <td id="we"></td>
+                    <td id="th"></td>
+                    <td id="fr"></td>
+                    <td id="sa"></td>
+                </tr>
+                <tr id="_">
+                    <td rowspan="2">4:00am</td>
+                    <td id="su"></td>
+                    <td id="mo"></td>
+                    <td id="tu"></td>
+                    <td id="we"></td>
+                    <td id="th"></td>
+                    <td id="fr"></td>
+                    <td id="sa"></td>
+                </tr>
+                <tr id="_">
+                    <td id="su"></td>
+                    <td id="mo"></td>
+                    <td id="tu"></td>
+                    <td id="we"></td>
+                    <td id="th"></td>
+                    <td id="fr"></td>
+                    <td id="sa"></td>
+                </tr>
+                <tr id="_">
+                    <td rowspan="2">5:00am</td>
+                    <td id="su"></td>
+                    <td id="mo"></td>
+                    <td id="tu"></td>
+                    <td id="we"></td>
+                    <td id="th"></td>
+                    <td id="fr"></td>
+                    <td id="sa"></td>
+                </tr>
+                <tr id="_">
+                    <td id="su"></td>
+                    <td id="mo"></td>
+                    <td id="tu"></td>
+                    <td id="we"></td>
+                    <td id="th"></td>
+                    <td id="fr"></td>
+                    <td id="sa"></td>
+                </tr>
+                <tr id="_">
                     <td rowspan="2">6:00am</td>
                     <td id="su"></td>
-                    <td id="mo"> </td>
+                    <td id="mo"></td>
                     <td id="tu"></td>
                     <td id="we"></td>
                     <td id="th"></td>
                     <td id="fr"></td>
                     <td id="sa"></td>
                 </tr>
-                <tr id="0630">
+                <tr id="_">
                     <td id="su"></td>
-                    <td id="mo"> </td>
+                    <td id="mo"></td>
                     <td id="tu"></td>
                     <td id="we"></td>
                     <td id="th"></td>
                     <td id="fr"></td>
                     <td id="sa"></td>
                 </tr>
-                <tr id="0700">
+                <tr id="_">
                     <td rowspan="2">7:00am</td>
                     <td id="su"></td>
                     <td id="mo"></td>
@@ -69,7 +183,7 @@
                     <td id="fr"></td>
                     <td id="sa"></td>
                 </tr>
-                <tr id="0730">
+                <tr id="_">
                     <td id="su"></td>
                     <td id="mo"></td>
                     <td id="tu"></td>
@@ -78,7 +192,7 @@
                     <td id="fr"></td>
                     <td id="sa"></td>
                 </tr>
-                <tr id="0800">
+                <tr id="_">
                     <td rowspan="2">8:00am</td>
                     <td id="su"></td>
                     <td id="mo"></td>
@@ -88,7 +202,102 @@
                     <td id="fr"></td>
                     <td id="sa"></td>
                 </tr>
-                <tr id="0830">
+                <tr id="_">
+                    <td id="su"></td>
+                    <td id="mo"></td>
+                    <td id="tu"></td>
+                    <td id="we"></td>
+                    <td id="th"></td>
+                    <td id="fr"></td>
+                    <td id="sa"></td>
+                </tr>
+                <tr id="_">
+                    <td rowspan="2">9:00am</td>
+                    <td id="su"></td>
+                    <td id="mo"></td>
+                    <td id="tu"></td>
+                    <td id="we"></td>
+                    <td id="th"></td>
+                    <td id="fr"></td>
+                    <td id="sa"></td>
+                </tr>
+                <tr id="_">
+                    <td id="su"></td>
+                    <td id="mo"></td>
+                    <td id="tu"></td>
+                    <td id="we"></td>
+                    <td id="th"></td>
+                    <td id="fr"></td>
+                    <td id="sa"></td>
+                </tr>
+                <tr id="_">
+                    <td rowspan="2">10:00am</td>
+                    <td id="su"></td>
+                    <td id="mo"></td>
+                    <td id="tu"></td>
+                    <td id="we"></td>
+                    <td id="th"></td>
+                    <td id="fr"></td>
+                    <td id="sa"></td>
+                </tr>
+                <tr id="_">
+                    <td id="su"></td>
+                    <td id="mo"></td>
+                    <td id="tu"></td>
+                    <td id="we"></td>
+                    <td id="th"></td>
+                    <td id="fr"></td>
+                    <td id="sa"></td>
+                </tr>
+                <tr id="_">
+                    <td rowspan="2">11:00am</td>
+                    <td id="su"></td>
+                    <td id="mo"></td>
+                    <td id="tu"></td>
+                    <td id="we"></td>
+                    <td id="th"></td>
+                    <td id="fr"></td>
+                    <td id="sa"></td>
+                </tr>
+                <tr id="_">
+                    <td id="su"></td>
+                    <td id="mo"></td>
+                    <td id="tu"></td>
+                    <td id="we"></td>
+                    <td id="th"></td>
+                    <td id="fr"></td>
+                    <td id="sa"></td>
+                </tr>
+                <tr id="_">
+                    <td rowspan="2">12:00pm</td>
+                    <td id="su"></td>
+                    <td id="mo"></td>
+                    <td id="tu"></td>
+                    <td id="we"></td>
+                    <td id="th"></td>
+                    <td id="fr"></td>
+                    <td id="sa"></td>
+                </tr>
+                <tr id="_">
+                    <td id="su"></td>
+                    <td id="mo"></td>
+                    <td id="tu"></td>
+                    <td id="we"></td>
+                    <td id="th"></td>
+                    <td id="fr"></td>
+                    <td id="sa"></td>
+                </tr>
+                <tr id="_">
+                    <td rowspan="2">1:00pm</td>
+                    <td id="su"></td>
+                    <td id="mo"></td>
+                    <td id="tu"></td>
+                    <td id="we"></td>
+                    <td id="th"></td>
+                    <td id="fr"></td>
+                    <td id="sa"></td>
+                </tr>
+                <tr id="_">
                     <td id="su"></td>
                     <td id="mo"></td>
                     <td id="tu"></td>
@@ -101,6 +310,8 @@
             </table>
         </div>
     </div>
+    
+    <!--* * * * FOOTER * * * *-->
     <div id="footer">
     <div class="ui container">
         <div class="ui grid">
@@ -125,7 +336,8 @@
         </p>
     </div>
     </div>
-    <!--Add Modal-->
+    
+    <!--* * * * ADD MODAL * * * *-->
     <div class="ui tiny modal" id="add-modal">
         <div class="scrolling content">
             <form class="ui form" id="add-course" style="padding-bottom: 1em">
@@ -133,11 +345,11 @@
                 <div class="two fields">
                     <div class="field">
                         <label>Course Title</label>
-                        <input type="text" name="courseName" placeholder="Calc II, CHEM 161, etc" required>
+                        <input type="text" name="add-courseName" placeholder="Calc II, CHEM 161, etc" required>
                     </div>
                     <div class="field">
                         <label>Color</label>
-                        <input type="text" name="color" placeholder="#23416c">
+                        <input type="text" name="add-color" placeholder="#23416c">
                     </div>
                 </div>
                 <div class="ui segment" id="meeting-1">
@@ -148,57 +360,57 @@
                     <div class="three fields">
                         <div class="field">
                         <label>Course Type</label>
-                            <input type="text" name="courseType" placeholder="Lab, Lecture, etc">
+                            <input type="text" name="add-courseType" placeholder="Lab, Lecture, etc">
                         </div>
                         <div class="field">
                         <label>Instructor</label>
-                            <input type="text" name="instructor" placeholder="John Doe">
+                            <input type="text" name="add-instructor" placeholder="John Doe">
                         </div>
                         <div class="field">
                         <label>Location</label>
-                            <input type="text" name="location" placeholder="Building A">
+                            <input type="text" name="add-location" placeholder="Building A">
                         </div>
                     </div>
                     <div class="equal width inline fields">
                         <div class="field">
                             <div class="ui checkbox">
-                              <input type="checkbox" name="weekday" value="SU">
+                              <input type="checkbox" name="add-weekday" value="SU">
                               <label>Sun</label>
                             </div>
                         </div>
                         <div class="field">
                             <div class="ui checkbox">
-                              <input type="checkbox" name="weekday" value="MO">
+                              <input type="checkbox" name="add-weekday" value="MO">
                               <label>Mon</label>
                             </div>
                         </div>
                         <div class="field">
                             <div class="ui checkbox">
-                              <input type="checkbox" name="weekday" value="TU">
+                              <input type="checkbox" name="add-weekday" value="TU">
                               <label>Tue</label>
                             </div>
                         </div>
                         <div class="field">
                             <div class="ui checkbox">
-                              <input type="checkbox" name="weekday" value="WE">
+                              <input type="checkbox" name="add-weekday" value="WE">
                               <label>Wed</label>
                             </div>
                         </div>
                         <div class="field">
                             <div class="ui checkbox">
-                              <input type="checkbox" name="weekday" value="TH">
+                              <input type="checkbox" name="add-weekday" value="TH">
                               <label>Thu</label>
                             </div>
                         </div>
                         <div class="field">
                             <div class="ui checkbox">
-                              <input type="checkbox" name="weekday" value="FR">
+                              <input type="checkbox" name="add-weekday" value="FR">
                               <label>Fri</label>
                             </div>
                         </div>
                         <div class="field">
                             <div class="ui checkbox">
-                              <input type="checkbox" name="weekday" value="SA">
+                              <input type="checkbox" name="add-weekday" value="SA">
                               <label>Sat</label>
                             </div>
                         </div>
@@ -206,11 +418,11 @@
                     <div class="fields">
                         <div class="field">
                         <label>Start Time</label>
-                            <input type="time" name="timeStart" required>
+                            <input type="time" name="add-timeStart" required>
                         </div>
                         <div class="field">
                         <label>End Time</label>
-                            <input type="time" name="timeEnd" required>
+                            <input type="time" name="add-timeEnd" required>
                         </div>
                     </div>
                 </div>
@@ -219,7 +431,108 @@
             <button class="ui button" onclick="meetingForm('add')">Add Another Meeting Time</button>
         </div>
     </div>
-    <!--Settings Modal-->
+    <!--* * * * EDIT MODAL * * * *-->
+    <div class="ui tiny modal" id="edit-modal">
+        <div class="scrolling content">
+            <h3 class="ui dividing header">Edit a Course</h3>
+            <form class="ui form" id="edit-course" style="display: none">
+                <div class="two fields">
+                    <div class="field">
+                        <label>Course Title</label>
+                        <input type="text" name="edit-courseName" id="edit-courseName" placeholder="Calc II, CHEM 161, etc" required>
+                    </div>
+                    <div class="field">
+                        <label>Color</label>
+                        <input type="text" name="edit-color" id="edit-color" placeholder="#23416c">
+                    </div>
+                </div>
+                <div class="ui segment" id="meeting-1">
+                    <span style="float: right">
+                        <i class="add link icon" data-content="Add another meeting time"></i>
+                        <i class="close link icon" data-content="Remove this meeting time"></i>
+                    </span>
+                    <div class="three fields">
+                        <div class="field">
+                        <label>Course Type</label>
+                            <input type="text" name="edit-courseType" id="edit-courseType" placeholder="Lab, Lecture, etc">
+                        </div>
+                        <div class="field">
+                        <label>Instructor</label>
+                            <input type="text" name="edit-instructor" id="edit-instructor" placeholder="John Doe">
+                        </div>
+                        <div class="field">
+                        <label>Location</label>
+                            <input type="text" name="edit-location" id="edit-location" placeholder="Building A">
+                        </div>
+                    </div>
+                    <div class="equal width inline fields">
+                        <div class="field">
+                            <div class="ui checkbox">
+                              <input type="checkbox" name="edit-weekday" value="SU">
+                              <label>Sun</label>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui checkbox">
+                              <input type="checkbox" name="edit-weekday" value="MO">
+                              <label>Mon</label>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui checkbox">
+                              <input type="checkbox" name="edit-weekday" value="TU">
+                              <label>Tue</label>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui checkbox">
+                              <input type="checkbox" name="edit-weekday" value="WE">
+                              <label>Wed</label>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui checkbox">
+                              <input type="checkbox" name="edit-weekday" value="TH">
+                              <label>Thu</label>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui checkbox">
+                              <input type="checkbox" name="edit-weekday" value="FR">
+                              <label>Fri</label>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui checkbox">
+                              <input type="checkbox" name="edit-weekday" value="SA">
+                              <label>Sat</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fields">
+                        <div class="field">
+                        <label>Start Time</label>
+                            <input type="time" name="edit-timeStart" id="edit-timeStart" required>
+                        </div>
+                        <div class="field">
+                        <label>End Time</label>
+                            <input type="time" name="edit-timeEnd" id="edit-timeEnd" required>
+                        </div>
+                    </div>
+                </div>                
+                <button class="ui right floated blue button" onclick="editCourse()">Save</button>
+                <button class="ui right floated red button" onclick="deleteCourse()">Delete</button>
+            </form>
+        
+            <select class="ui dropdown" id="edit-selection" onchange="autofill()">
+                <option value="none">- - -</option>
+            </select>
+        </div>
+    </div>
+        
+    <!--
+        * * * * SETTINGS MODAL * * * *
+    -->
     <div class="ui tiny modal" id="settings-modal">
         <div class="content">
             <p>butt</p>
