@@ -14,19 +14,43 @@ var dp;
 
 document.addEventListener("DOMContentLoaded", function() {
     schedule = [];
-    dp = new DayPilot.Calendar("dp");
-    dp.viewType = "Week";
     
-    dp.onClick = function(args) {
-        alert("clicked: " + args.e.id());
-    };
-
-    // event creating
-    dp.onTimeRangeSelected = function(args) {
-        alert("click?");
-    };
-    
-    dp.init();
+    // DayPilot Calendar settings
+    dp = $("#dp").daypilotCalendar({
+        viewType: "Week",
+        headerDateFormat: "dddd",
+        timeRangeSelectedHandling: "Enabled",
+        onTimeRangeSelected: function(args) {
+            var name = prompt("New event name:", "Event");
+            dp.clearSelection();
+            if (!name) return;
+            var e = new DayPilot.Event({
+                start: args.start,
+                end: args.end,
+                id: DayPilot.guid(),
+                resource: args.resource,
+                text: name
+            });
+            dp.events.add(e);
+        },
+        eventDeleteHandling: "Update",
+        onEventDeleted: function (args) {
+            this.message("Event deleted: " + args.e.text());
+        },
+        eventMoveHandling: "Update",
+        onEventMoved: function (args) {
+            this.message("Event moved: " + args.e.text());
+        },
+        eventResizeHandling: "Update",
+        onEventResized: function (args) {
+            this.message("Event resized: " + args.e.text());
+        },
+        eventClickHandling: "Select",
+        onEventEdited: function (args) {
+            this.message("Event selected: " + args.e.text());
+        },
+        eventHoverHandling: "Disabled",
+    });
 });
 
 
