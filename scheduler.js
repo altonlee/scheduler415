@@ -3,75 +3,80 @@
  * 
  * Alton Lee
  *
- * 12/9/2019
+ * 12/18/2019
  *
  * Script file for scheduler415. Contains functions needed
  * for the app to function. 
 */
 
+/** TODO:
+    * add Semantic theme to daypilotCalendar
+    * link functions to calendar
+    * html to image 
+    * export to json
+    * import from json
+*/ 
+
 var schedule;
 var dp;
 
 document.addEventListener("DOMContentLoaded", function() {
-    schedule = [];
+    schedule = [/*
+    {
+        id: DayPilot.guid(),
+        color: "00f",
+        courseName: "MATH 241",
+        courseType: "lecture",
+        instructor: "John Doe",
+        location: "Keller 204",
+        timeEnd: "13:30",
+        timeStart: "14:20",
+        weekdays: ["MO", "WE", "FR"]
+    },
+    {
+        id: DayPilot.guid(),
+        color: "0f0",
+        courseName: "KOR 102",
+        courseType: "lecture",
+        instructor: "Bonni",
+        location: "Moore 102",
+        timeEnd: "10:30",
+        timeStart: "11:20",
+        weekdays: ["MO", "TU", "WE", "TH"]
+    }*/
+    ];
     
     // DayPilot Calendar settings
     dp = $("#dp").daypilotCalendar({
         viewType: "Week",
         headerDateFormat: "dddd",
-        timeRangeSelectedHandling: "Enabled",
-        onTimeRangeSelected: function(args) {
-            var name = prompt("New event name:", "Event");
-            dp.clearSelection();
-            if (!name) return;
-            var e = new DayPilot.Event({
-                start: args.start,
-                end: args.end,
-                id: DayPilot.guid(),
-                resource: args.resource,
-                text: name
-            });
-            dp.events.add(e);
+        onEventClick: function(args) {
+            clickCourse(args, "edit");
         },
-        eventDeleteHandling: "Update",
-        onEventDeleted: function (args) {
-            this.message("Event deleted: " + args.e.text());
-        },
-        eventMoveHandling: "Update",
-        onEventMoved: function (args) {
-            this.message("Event moved: " + args.e.text());
-        },
-        eventResizeHandling: "Update",
-        onEventResized: function (args) {
-            this.message("Event resized: " + args.e.text());
-        },
-        eventClickHandling: "Select",
-        onEventEdited: function (args) {
-            this.message("Event selected: " + args.e.text());
-        },
-        eventHoverHandling: "Disabled",
     });
+    
+    console.log(dp.events);
 });
 
-
-// Creates a Course object to be pushed into object schedule. 
+// Add a Course object into schedule[].
 // Does not take any parameters.
 function addCourse() {
     var form = $("#add-course").serializeArray();
     var course = [];
     var days = [];
-
-    // Check form results
+    
+    // Push form results into obj
     for (i = 0; i < form.length; i++) {
         if (form[i].name === "add-weekday") {
             days.push(form[i].value);
             course["weekdays"] = days;
         } else {
-            var name = form[i].name.replace('add-', "");
+            var name = form[i].name.replace('add-', '');
             course[name] = form[i].value;
         }
+        course["id"] = DayPilot.guid();
     }
-
+    
     // Check required inputs
     if (course['courseName'] === "") {
         alert("Course must have a title.");
@@ -82,22 +87,26 @@ function addCourse() {
     } else if (course['timeEnd'] === "") {
         alert("Course is missing an end time.");
     } else {
-        // Push into schedule
         schedule.push(course);
+        console.log(schedule);
         $('#add-course')[0].reset();
-        toggle('#add-modal');        
+        toggle('#add-modal');
+        
+        var e = new DayPilot.Event({
+            start: "2019-12-18T" + course.timeStart + ":00",
+            end: "2019-12-18T" + course.timeEnd + ":00",
+            id: course.id,
+            text: course.courseName,
+        });
+        dp.events.add(e);
     }
 }
 
-
-// Edits a specified course. 
-// Does not take any parameters. 
 function editCourse() {
-    var selected = document.getElementById("edit-selection").value;
     var form = $("#edit-course").serializeArray();
     var course = [];
     var days = [];
-
+    
     // Check form results
     for (i = 0; i < form.length; i++) {
         if (form[i].name === "edit-weekday") {
@@ -118,81 +127,101 @@ function editCourse() {
     } else if (course['timeEnd'] === "") {
         alert("Course is missing an end time.");
     } else {
-        schedule[selected].courseName = course.courseName;
-        schedule[selected].color = course.color;
-        schedule[selected].courseType = course.courseType;
-        schedule[selected].instructor = course.instructor;
-        schedule[selected].location = course.location;
-        schedule[selected].timeStart = course.timeStart;
-        schedule[selected].timeEnd = course.timeEnd;
+        console.log(course);
+        var index = schedule.findIndex(function (obj) {
+            return obj.id === course["id"];
+        });
+        schedule[index] = course;
+        $('#edit-course')[0].reset();
         toggle('#edit-modal');
+        dp.events.update(index);
     }
-    
 }
 
-// Removes course from schedule[]. 
-// Does not take any parameters.
 function deleteCourse() {
     var alert = confirm("Are you sure you want to delete this course?");
     if (alert) {
-        var selected = document.getElementById("edit-selection").value;
-        schedule.splice(selected, 1);
+        var index = schedule.findIndex(function (obj) {
+            return obj.id === $("#edit-course")["id"];
+        });
+        schedule.splice(index, 1);
         $('#edit-course')[0].reset();
         toggle('#edit-modal');
+        dp.events.delete(index);
+    }
+}
+
+// Handles Event click behavior.
+// Takes two parameters, Event arguments and mode function. 
+function clickCourse(args, mode) {
+    if (mode === "add") {
+        console.log("add!");
+    } else if (mode === "edit") {
+        var course = schedule.find(function (obj) {
+            return obj.id === args.e.id();
+        });
+        editInit(course);
     }
 }
 
 
-function deleteSchedule() {
-    if (schedule.length > 0) {
-        schedule = [];
-        toggle('#clear-confirm');
-    } else {
-        alert("Schedule is already empty!");
-        toggle('#clear-confirm');
-    }
-}
-
-// Autofills 'Edit Course' form with the selected course's details.
-// Does not take any parameters.
-function autofill() {
-    var selected = document.getElementById("edit-selection").value;
-    
-    if (selected === "none") {
-        $("#edit-form")[0].style.display = "none";
-    } else {
-        $("#edit-form")[0].style.display = "block";
-        var course = schedule[selected];
-        
-        $("#edit-courseName").val = course.courseName;
-        $("#edit-color").val = course.color;
-        $("#edit-courseType").val = course.courseType;
-        $("#edit-instructor").val = course.instructor;
-        $("#edit-location").val = course.location;
-        $("#edit-timeStart").val = course.timeStart;
-        $("#edit-timeEnd").val = course.timeEnd;
-    }
-}
-
-
-// Populates the Dropdown list with the current user's courses stored in 
-// schedule[].
-// Does not take any parameters. 
-function editInit() {
-    // Make sure edit modal is always hiding form lol
-    $("#edit-form")[0].style.display = "none";
-    
+// Initializes the Edit modal by populating the dropdown list with the
+// current user's courses stored in schedule[].
+// Takes one parameter, a Course object.
+function editInit(argv) {
     var select = document.getElementById("edit-selection");
     $("#edit-selection").empty();
     
     select.options[0] = new Option('- - -', 'none', true, true);
-    
     for (var i = 0; i < schedule.length; i++) {
         select.options[select.options.length] = new Option(schedule[i].courseName, i, false, false);
+    }
+    
+    if (argv != null) {
+        $("#edit-form")[0].style.display = "block";
+        autofill(argv);
+    } else {
+        $("#edit-form")[0].style.display = "none";
     }
     toggle('#edit-modal');
 }
 
+
+// Autofills the Edit modal form with a selected Course.
+// Takes one parameter, a Course to edit.
+function autofill(argv) {
+    if (argv != null) {
+        $("#edit-form")[0].style.display = "block";
+        var course = argv;
+        
+        $("#edit-id").val(course.id);
+        $("#edit-courseName").val(course.courseName);
+        $("#edit-color").val(course.color);
+        $("#edit-courseType").val(course.courseType);
+        $("#edit-instructor").val(course.instructor);
+        $("#edit-location").val(course.location);
+        $("#edit-timeStart").val(course.timeStart);
+        $("#edit-timeEnd").val(course.timeEnd);
+    } else {
+        var selected = document.getElementById("edit-selection").value;
+        
+        if (selected === "none") {
+            $("#edit-form")[0].style.display = "none";
+        } else {
+            $("#edit-form")[0].style.display = "block";
+            var course = schedule[selected];
+            
+            $("#edit-id").val(course.id);
+            $("#edit-courseName").val(course.courseName);
+            $("#edit-color").val(course.color);
+            $("#edit-courseType").val(course.courseType);
+            $("#edit-instructor").val(course.instructor);
+            $("#edit-location").val(course.location);
+            $("#edit-timeStart").val(course.timeStart);
+            $("#edit-timeEnd").val(course.timeEnd);
+        }
+    }
+}
 
 // Toggles modals on and off.
 // Takes one parameter, the name of the modal to toggle. 
