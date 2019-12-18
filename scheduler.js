@@ -10,55 +10,126 @@
 */
 
 /** TODO:
-    * add Semantic theme to daypilotCalendar
-    * link functions to calendar
+    * settings options
     * html to image 
     * export to json
     * import from json
+    * readd click & drag functionality :)
 */ 
 
 var schedule;
 var dp;
+var weekday = {
+    MO: "2019-12-16",
+    TU: "2019-12-17",
+    WE: "2019-12-18",
+    TH: "2019-12-19",
+    FR: "2019-12-20",
+    SA: "2019-12-21",
+    SU: "2019-12-15"
+};
 
+// EventListener for when document is fully loaded.
+// Loads default courses and calendar settings. 
 document.addEventListener("DOMContentLoaded", function() {
-    schedule = [/*
+    schedule = [
     {
         id: DayPilot.guid(),
-        color: "00f",
-        courseName: "MATH 241",
-        courseType: "lecture",
-        instructor: "John Doe",
-        location: "Keller 204",
-        timeEnd: "13:30",
-        timeStart: "14:20",
-        weekdays: ["MO", "WE", "FR"]
-    },
-    {
-        id: DayPilot.guid(),
-        color: "0f0",
-        courseName: "KOR 102",
+        color: "ff0000",
+        courseName: "KOR 201",
         courseType: "lecture",
         instructor: "Bonni",
-        location: "Moore 102",
+        location: "Moore 111",
         timeEnd: "10:30",
         timeStart: "11:20",
         weekdays: ["MO", "TU", "WE", "TH"]
-    }*/
-    ];
+    },
+    {
+        id: DayPilot.guid(),
+        color: "00ff00",
+        courseName: "Calc II",
+        courseType: "lab",
+        instructor: "John Doe",
+        location: "Keller 215",
+        timeEnd: "13:00",
+        timeStart: "14:20",
+        weekdays: ["FR"]
+    }];
     
     // DayPilot Calendar settings
     dp = $("#dp").daypilotCalendar({
+        startDate: "2019-12-15",
         viewType: "Week",
         headerDateFormat: "dddd",
+        timeRangeSelectedHandling: "Disabled",
+        onTimeRangeSelected: function(args) {
+            // add()
+        },
+        eventDeleteHandling: "Disabled",
+        onEventDeleted: function (args) {
+            //this.message("Event deleted: " + args.e.text());
+        },
+        eventMoveHandling: "Disabled",
+        onEventMoved: function (args) {
+            //this.message("Event moved: " + args.e.text());
+        },
+        eventResizeHandling: "Disabled",
+        onEventResized: function (args) {
+            //this.message("Event resized: " + args.e.text());
+        },
+        eventClickHandling: "Disabled",
+        onEventEdited: function (args) {
+            //this.message("Event selected: " + args.e.text());
+        },
+        eventHoverHandling: "Disabled",
+        
         onEventClick: function(args) {
             clickCourse(args, "edit");
         },
     });
     
-    console.log(dp.events);
+    dp.events.list = [
+    {
+        start: "2019-12-16T10:30:00",
+        end: "2019-12-16T11:20:00",
+        id: schedule[0].id,
+        text: "KOR 201",
+        barColor: "#ff0000"
+    },
+    {
+        start: "2019-12-17T10:30:00",
+        end: "2019-12-17T11:20:00",
+        id: schedule[0].id,
+        text: "KOR 201",
+        barColor: "#ff0000"
+    },
+    {
+        start: "2019-12-18T10:30:00",
+        end: "2019-12-18T11:20:00",
+        id: schedule[0].id,
+        text: "KOR 201",
+        barColor: "#ff0000"
+    },
+    {
+        start: "2019-12-19T10:30:00",
+        end: "2019-12-19T11:20:00",
+        id: schedule[0].id,
+        text: "KOR 201",
+        barColor: "#ff0000"
+    },
+    {
+        start: "2019-12-20T13:00:00",
+        end: "2019-12-20T14:20:00",
+        id: schedule[1].id,
+        text: "Calc II",
+        barColor: "#00ff00"
+    }];
+    dp.update();
 });
 
-// Add a Course object into schedule[].
+
+// Add a Course object into schedule[], and adds Events
+// into the calendar. 
 // Does not take any parameters.
 function addCourse() {
     var form = $("#add-course").serializeArray();
@@ -87,21 +158,32 @@ function addCourse() {
     } else if (course['timeEnd'] === "") {
         alert("Course is missing an end time.");
     } else {
+        // Add course to schedule[]
         schedule.push(course);
-        console.log(schedule);
+        // Add events to calendar
+        for (i = 0; i < days.length; i++) {
+            var str = weekday[days[i]] + "T";
+            
+            var e = new DayPilot.Event({
+                start: str + course.timeStart + ":00",
+                end: str + course.timeEnd + ":00",
+                id: course.id,
+                text: course.courseName,
+                barColor: course.color
+            });
+            dp.events.add(e);
+        }
+        
+        // Reset form & close modal
         $('#add-course')[0].reset();
         toggle('#add-modal');
-        
-        var e = new DayPilot.Event({
-            start: "2019-12-18T" + course.timeStart + ":00",
-            end: "2019-12-18T" + course.timeEnd + ":00",
-            id: course.id,
-            text: course.courseName,
-        });
-        dp.events.add(e);
     }
 }
 
+
+// Edits a Course from schedule[] and its Events
+// from the calendar.
+// Does not take any parameters. 
 function editCourse() {
     var form = $("#edit-course").serializeArray();
     var course = [];
@@ -127,29 +209,66 @@ function editCourse() {
     } else if (course['timeEnd'] === "") {
         alert("Course is missing an end time.");
     } else {
-        console.log(course);
         var index = schedule.findIndex(function (obj) {
             return obj.id === course["id"];
         });
+        // Edit course from schedule[]
         schedule[index] = course;
+        /* "Edit" events from calendar; explanation below:
+           * due to DayPilot locking client-side event updating,
+           * I will be removing the events first, then readding
+           * them with the new course details
+        */
+        for (i = 0; i < dp.events.list.length; i++) {
+            if (dp.events.list[i].id == course.id) {
+                dp.events.remove(course.id);
+                i--;
+            }
+        }
+        for (i = 0; i < days.length; i++) {
+            var str = weekday[days[i]] + "T";
+            
+            var e = new DayPilot.Event({
+                start: str + course.timeStart + ":00",
+                end: str + course.timeEnd + ":00",
+                id: course.id,
+                text: course.courseName,
+                barColor: course.color
+            });
+            dp.events.add(e);
+        }
+        // Reset form & close modal
         $('#edit-course')[0].reset();
         toggle('#edit-modal');
-        dp.events.update(index);
     }
 }
 
+
+// Deletes a Course from schedule[] and its Events
+// from the calendar.
+// Does not take any parameters. 
 function deleteCourse() {
     var alert = confirm("Are you sure you want to delete this course?");
     if (alert) {
+        var id = document.getElementById("edit-id").value;
         var index = schedule.findIndex(function (obj) {
-            return obj.id === $("#edit-course")["id"];
+            return obj.id === id;
         });
+        // Remove course from schedule[]
         schedule.splice(index, 1);
+        // Remove events from calendar
+        for (i = 0; i < dp.events.list.length; i++) {
+            if (dp.events.list[i].id === id) {
+                dp.events.remove(id);
+                i--;
+            }
+        }
+        // Reset form & close modal
         $('#edit-course')[0].reset();
         toggle('#edit-modal');
-        dp.events.delete(index);
     }
 }
+
 
 // Handles Event click behavior.
 // Takes two parameters, Event arguments and mode function. 
@@ -161,7 +280,29 @@ function clickCourse(args, mode) {
             return obj.id === args.e.id();
         });
         editInit(course);
+    } else if (mode === "del") {
+        console.log("delete");
     }
+}
+
+
+// Removes all courses in schedule[].
+// Does not take any parameters. 
+function deleteSchedule() {
+    if (schedule.length > 0) {
+        // remove course from schedule[]
+        while (schedule.length > 0) {
+            schedule.pop();
+        }
+        // remove events from calendar
+        while (dp.events.list.length > 0) {
+            var id = dp.events.list[0].id;
+            dp.events.remove(id);
+        }
+    } else {
+        alert("Your schedule is currently empty!");
+    }
+    toggle('#clear-confirm');
 }
 
 
@@ -222,6 +363,7 @@ function autofill(argv) {
         }
     }
 }
+
 
 // Toggles modals on and off.
 // Takes one parameter, the name of the modal to toggle. 
