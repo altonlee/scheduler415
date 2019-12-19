@@ -58,31 +58,34 @@ document.addEventListener("DOMContentLoaded", function() {
     
     // DayPilot Calendar settings
     dp = $("#dp").daypilotCalendar({
-        startDate: "2019-12-15",
-        viewType: "Week",
+        theme: "semantic",
+        viewType: "WorkWeek",
         headerDateFormat: "dddd",
-        timeRangeSelectedHandling: "Disabled",
-        onTimeRangeSelected: function(args) {
-            // add()
+        businessBeginsHour: 7,
+        businessEndsHour: 19,
+        dayBeginsHour: 7,
+        dayEndsHour: 20,
+        cellHeight: 20,
+        heightSpec: "Parent100Pct",
+        eventArrangement: "Full",
+        timeRangeSelectedHandling: "Enabled",
+        onTimeRangeSelected: function (args) {
+            console.log();
         },
         eventDeleteHandling: "Disabled",
         onEventDeleted: function (args) {
-            //this.message("Event deleted: " + args.e.text());
+        this.message("Event deleted: " + args.e.text());
         },
         eventMoveHandling: "Disabled",
         onEventMoved: function (args) {
-            //this.message("Event moved: " + args.e.text());
+        this.message("Event moved: " + args.e.text());
         },
         eventResizeHandling: "Disabled",
         onEventResized: function (args) {
-            //this.message("Event resized: " + args.e.text());
+        this.message("Event resized: " + args.e.text());
         },
-        eventClickHandling: "Disabled",
-        onEventEdited: function (args) {
-            //this.message("Event selected: " + args.e.text());
-        },
+        eventClickHandling: "Enabled",
         eventHoverHandling: "Disabled",
-        
         onEventClick: function(args) {
             clickCourse(args, "edit");
         },

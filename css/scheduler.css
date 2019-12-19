@@ -1,6 +1,6 @@
 /* 
 DayPilot Calendar Theme 
-https://themes.daypilot.org/calendar/theme/xmmzkh
+https://themes.daypilot.org/calendar/theme/vt4x5p
 Theme Designer Version: 2019.08.13.78552
 */
 .semantic_main 
@@ -13,7 +13,7 @@ Theme Designer Version: 2019.08.13.78552
 	font-size: 12px;
 }
 .semantic_event { 
-	color: #333333;
+	color: #424242;
 	-moz-border-radius: 2px;
 	-webkit-border-radius: 2px;
 	border-radius: 2px;
@@ -26,26 +26,16 @@ Theme Designer Version: 2019.08.13.78552
 	top: 0px;
 	bottom: 0px;
 	margin: 0px;
-	background-color: #ffffff;
-	background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#f7f7f7));  
-	background: -webkit-linear-gradient(top, #ffffff 0%, #f7f7f7);
-	background: -moz-linear-gradient(top, #ffffff 0%, #f7f7f7);
-	background: -ms-linear-gradient(top, #ffffff 0%, #f7f7f7);
-	background: -o-linear-gradient(top, #ffffff 0%, #f7f7f7);
-	background: linear-gradient(top, #ffffff 0%, #f7f7f7);
-	filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr="#ffffff", endColorStr="#f7f7f7");
+	background-color: #fefefe;
 	-moz-border-radius: 2px;
 	-webkit-border-radius: 2px;
 	border-radius: 2px;
 	padding: 2px;
-	padding-left: 10px;
+	padding-left: 13px;
 	border: 1px solid #cccccc;
 	text-shadow:
 	0px -1px 0px rgba(000,000,000,0.2),
 	0px 1px 0px rgba(255,255,255,1);
-	-moz-box-shadow: inset 0px 0px 2px rgba(255,255,255,0.8);
-	-webkit-box-shadow: inset 0px 0px 2px rgba(255,255,255,0.8);
-	box-shadow: inset 0px 0px 2px rgba(255,255,255,0.8);
 }
 .semantic_alldayevent { 
 }
@@ -183,13 +173,13 @@ Theme Designer Version: 2019.08.13.78552
 	left: 0px;
 	bottom: 0px;
 	width: 8px;
-	background-color: #9dc8e8;
+	background-color: #767676;
 }
 .semantic_event_bar_inner  
 {
 	position: absolute;
 	width: 8px;
-	background-color: #1066a8;
+	background-color: #2185d0;
 }
 .semantic_event_delete {
 	background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAadEVYdFNvZnR3YXJlAFBhaW50Lk5FVCB2My41LjExR/NCNwAAAI5JREFUKFNtkLERgCAMRbmzdK8s4gAUlhYOYEHJEJYOYOEwDmGBPxC4kOPfvePy84MGR0RJ2N1A8H3N6DATwSQ57m2ql8NBG+AEM7D+UW+wjdfUPgerYNgB5gOLRHqhcasg84C2QxPMtrUhSqQIhg7ypy9VM2EUZPI/4rQ7rGxqo9sadTegw+UdjeDLAKUfhbaQUVPIfJYAAAAASUVORK5CYII=) center center no-repeat; 

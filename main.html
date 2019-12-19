@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
     <link rel="stylesheet" type="text/css" href="./css/style.css">
     <link rel="stylesheet" type="text/css" href="./css/scheduler.css">
@@ -20,15 +21,15 @@
         <h1>Scheduler 415</h1>
         <p>A scheduler app designed for students.</p>
         <div class="ui center aligned container" style="padding-bottom: 1em">
-            <button class="ui button" onclick="toggle('#add-modal')">Add</button>
-            <button class="ui button" onclick="editInit(null)">Edit</button>
+            <div class="ui button" onclick="toggle('#add-modal')" data-tooltip="Add a Course">Add</div>
+            <div class="ui button" onclick="editInit(null)" data-tooltip="Edit or Remove a Course">Edit</div>
             <!--
             <button class="ui button">Import</button>
             <button class="ui button">Export</button>
             <button class="ui button">Download</button>
             -->
-            <button class="ui button" onclick="toggle('#clear-confirm')">Clear</button>
-            <button class="ui button" onclick="toggle('#settings-modal')">Settings</button>
+            <div class="ui button" onclick="toggle('#clear-confirm')" data-tooltip="Create a new Schedule">Clear</div>
+            <div class="ui button" onclick="toggle('#settings-modal')"data-tooltip="Modify settings and customization">Settings</div>
         </div>
         <div id="dp"></div>
     </div>
@@ -76,8 +77,8 @@
                 </div>
                 <div class="ui segment" id="meeting-1">
                     <span style="float: right">
-                        <i class="add link icon" data-content="Add another meeting time"></i>
-                        <i class="close link icon" data-content="Remove this meeting time"></i>
+                        <i class="add link icon" data-tooltip="Add another meeting time"></i>
+                        <i class="close link icon" data-tooltip="Remove this meeting time"></i>
                     </span>
                     <div class="three fields">
                         <div class="field">
@@ -172,8 +173,8 @@
                     </div>
                     <div class="ui segment" id="meeting-1">
                         <span style="float: right">
-                            <i class="add link icon" data-content="Add another meeting time"></i>
-                            <i class="close link icon" data-content="Remove this meeting time"></i>
+                            <i class="add link icon" data-tooltip="Add another meeting time"></i>
+                            <i class="close link icon" data-tooltip="Remove this meeting time"></i>
                         </span>
                         <div class="three fields">
                             <div class="field">
