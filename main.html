@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="./css/scheduler.css">
     <title>Scheduler 415</title>
     <script src = "./components/jquery.min.js"></script>
+    <script src="https://cdn.rawgit.com/tsayen/dom-to-image/bfc00a6c5bba731027820199acd7b0a6e92149d8/dist/dom-to-image.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
 </head>
 <body>
@@ -21,17 +22,22 @@
         <h1>Scheduler 415</h1>
         <p>A scheduler app designed for students.</p>
         <div class="ui center aligned container" style="padding-bottom: 1em">
-            <div class="ui button" onclick="toggle('#add-modal')" data-tooltip="Add a Course">Add</div>
-            <div class="ui button" onclick="editInit(null)" data-tooltip="Edit or Remove a Course">Edit</div>
-            <!--
-            <button class="ui button">Import</button>
-            <button class="ui button">Export</button>
-            <button class="ui button">Download</button>
-            -->
-            <div class="ui button" onclick="toggle('#clear-confirm')" data-tooltip="Create a new Schedule">Clear</div>
-            <div class="ui button" onclick="toggle('#settings-modal')"data-tooltip="Modify settings and customization">Settings</div>
+            <div class="ui button" onclick="toggle('#add-modal')" data-tooltip="Add a Course"><i class="plus circle icon"></i>Add</div>
+            <div class="ui button" onclick="editInit(null)" data-tooltip="Edit or Remove a Course"><i class="edit icon"></i>Edit</div>
+            <div class="ui button" onclick="toggle('#clear-confirm')" data-tooltip="Create a new Schedule"><i class="calendar outline icon"></i>New</div>
+            <div class="ui button" onclick="toggle('#settings-modal')" data-tooltip="Modify settings and calendar options"><i class="cog icon"></i>Settings</div>
+            <div class="ui simple dropdown button">
+                <i class="download icon"></i>Save as...
+                <div class="menu">
+                    <div class="item" id="save-img" onclick="save()">
+                        <i class="images icon"></i>
+                        Image (PNG)
+                    </div>
+                </div>
+            </div>
         </div>
         <div id="dp"></div>
+        <div id="img-out"></div>
     </div>
     
     <!--* * * * FOOTER * * * *-->
@@ -268,8 +274,64 @@
     </div>
     <!--* * * * SETTINGS MODAL * * * *-->
     <div class="ui tiny modal" id="settings-modal">
-        <div class="content">
-            <p>butt</p>
+        <div class="scrolling content">
+            <form class="ui form" id="settings-form" style="padding-bottom: 1em">
+                <h4 class="ui dividing header">Settings</h4>
+                <div class="two fields">
+                    <div class="disabled field">
+                        <label>Import</label>
+                        <div class="ui action input">
+                            <input type="text" id="set-import">
+                            <div class="ui icon button"><i class="folder open icon"></i></div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>Export</label>
+                        <div class="ui action input">
+                            <input type="text" id="set-export">
+                            <div class="ui icon button"><i class="download icon"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <h4 class="ui dividing header">Customization</h4>
+                <div class="three fields">
+                    <div class="field">
+                        <label>Set Start Hour</label>
+                        <input type="time" name="set-dayBeginsHour" id="set-dayBeginsHour">
+                    </div>
+                    <div class="field">
+                        <label>Set End Hour</label>
+                        <input type="time" name="set-dayEndsHour" id="set-dayEndsHour">
+                    </div>
+                    <div class="field">
+                        <label>Week View</label>
+                        <div class="ui slider checkbox" style="padding-top: 0.5em">
+                            <input type="checkbox" id="set-viewType">
+                            <label>Include weekends</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="two fields">
+                    <div class="field">
+                        <label>Cell Duration</label>
+                        <select id="set-cellDuration" name="set-cellDuration">
+                            <option value="15">15 min</option>
+                            <option value="20">20 min</option>
+                            <option value="30" selected="selected">30 min</option>
+                            <option value="60">60 min</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label>Cell Height</label>
+                        <select id="set-cellHeight" name="set-cellHeight">
+                            <option value="20" selected="selected">20px</option>
+                            <option value="30">30px</option>
+                            <option value="40">40px</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+            <button class="ui right floated blue button" onclick="saveSettings()">Save</button>
         </div>
     </div>
 <script src="components/daypilot-all.min.js" type="text/javascript"></script>

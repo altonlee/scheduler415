@@ -32,6 +32,10 @@ var weekday = {
 // EventListener for when document is fully loaded.
 // Loads default courses and calendar settings. 
 document.addEventListener("DOMContentLoaded", function() {
+    $('#button-save').dropdown({
+        on: 'hover'
+      })
+    ;
     schedule = [
     {
         id: DayPilot.guid(),
@@ -328,6 +332,45 @@ function editInit(argv) {
         $("#edit-form")[0].style.display = "none";
     }
     toggle('#edit-modal');
+}
+
+// Processes the user's settings.
+// Does not take any parameters. 
+function saveSettings() {
+    var form = $("#settings-form").serializeArray();
+    
+    // Check form results
+    for (i = 0; i < form.length; i++) {
+        var name = form[i].name.replace('set-', "");
+        if (name === "dayBeginsHour" || name === "dayEndsHour") {
+            dp[name] = form[i].value.split(":")[0];
+        } else 
+            dp[name] = form[i].value;
+    }
+    if (document.getElementById("set-viewType").checked) {
+        dp.viewType = "Week";
+    } else {
+        dp.viewType = "WorkWeek";
+    }
+    
+    dp.update();
+    toggle("#settings-modal");
+}
+
+
+// save as image
+// uses tsayen's dom-to-image framework
+function save() {
+    domtoimage.toBlob(document.getElementById('dp'))
+        .then(function (blob) {
+            let url = window.URL;
+            let a = document.createElement("a");
+            a.href = url.createObjectURL(blob);
+            a.download = "schedule.png";
+            document.body.appendChild(a);
+            a.click();
+            document.body.appendChild(a);
+        });
 }
 
 
