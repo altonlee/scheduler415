@@ -36,29 +36,7 @@ document.addEventListener("DOMContentLoaded", function() {
         on: 'hover'
       })
     ;
-    schedule = [
-    {
-        id: DayPilot.guid(),
-        color: "ff0000",
-        courseName: "KOR 201",
-        courseType: "lecture",
-        instructor: "Bonni",
-        location: "Moore 111",
-        timeEnd: "10:30",
-        timeStart: "11:20",
-        weekdays: ["MO", "TU", "WE", "TH"]
-    },
-    {
-        id: DayPilot.guid(),
-        color: "00ff00",
-        courseName: "Calc II",
-        courseType: "lab",
-        instructor: "John Doe",
-        location: "Keller 215",
-        timeEnd: "13:00",
-        timeStart: "14:20",
-        weekdays: ["FR"]
-    }];
+    schedule = [];
     
     // DayPilot Calendar settings
     dp = $("#dp").daypilotCalendar({
@@ -94,44 +72,6 @@ document.addEventListener("DOMContentLoaded", function() {
             clickCourse(args, "edit");
         },
     });
-    
-    dp.events.list = [
-    {
-        start: "2019-12-16T10:30:00",
-        end: "2019-12-16T11:20:00",
-        id: schedule[0].id,
-        text: "KOR 201",
-        barColor: "#ff0000"
-    },
-    {
-        start: "2019-12-17T10:30:00",
-        end: "2019-12-17T11:20:00",
-        id: schedule[0].id,
-        text: "KOR 201",
-        barColor: "#ff0000"
-    },
-    {
-        start: "2019-12-18T10:30:00",
-        end: "2019-12-18T11:20:00",
-        id: schedule[0].id,
-        text: "KOR 201",
-        barColor: "#ff0000"
-    },
-    {
-        start: "2019-12-19T10:30:00",
-        end: "2019-12-19T11:20:00",
-        id: schedule[0].id,
-        text: "KOR 201",
-        barColor: "#ff0000"
-    },
-    {
-        start: "2019-12-20T13:00:00",
-        end: "2019-12-20T14:20:00",
-        id: schedule[1].id,
-        text: "Calc II",
-        barColor: "#00ff00"
-    }];
-    dp.update();
 });
 
 
